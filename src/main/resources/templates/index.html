@@ -13,22 +13,24 @@
     <thead>
     <tr style="background:#db71c9">
         <th>Имя</th>
-        <th>Фамилия</th>
+        <th>Пароль</th>
         <th>email</th>
+        <th>Роль</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user: ${users}">
-        <td th:text="${user.firstName}"/>
-        <td th:text="${user.lastName}"/>
+        <td th:text="${user.userName}"/>
+        <td th:text="${user.password}"/>
         <td th:text="${user.email}"/>
+        <td th:text="${user.roles}"/>
         <td>
-            <form th:method="GET" th:action="@{{id}/update(id=${user.getId()})}">
+            <form th:method="GET" th:action="@{{id}/update(id=${user.id})}">
                 <input type="submit" style="color: #db71c9" th:value="Изменить">
             </form>
         </td>
         <td>
-            <form th:method="DELETE" th:action="@{users/{id}/delete(id=${user.getId()})}">
+            <form th:method="DELETE" th:action="@{{id}/delete(id=${user.id})}">
                 <input type="submit" style="color: #db71c9" th:value="Удалить">
             </form>
         </td>
@@ -36,6 +38,7 @@
     </tbody>
 </table>
 <br>
-<input type="button" style="color: #db71c9" value="Добавить пользователя" onclick="window.location.href = 'add'"/>
+<input type="button" style="color: #db71c9" value="Добавить пользователя" onclick="window.location.href = '/registration'"/>
+<input type="button" style="color: #db71c9" value="Выйти" onclick="window.location.href = '/logout'"/>
 </body>
 </html>

@@ -6,17 +6,20 @@
     <title>Update</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}">
-    <label for="firstName"> Имя </label>
-    <input type="text" th:field="*{firstName}" id="firstName">
+<form th:method="PATCH" th:action="@{/{id}(id=${id})}" th:object="${user}">
+    <label for="name"> Имя </label>
+    <input type="text" th:field="*{userName}" id="name">
     <br>
-    <label for="lastName"> Фамилия </label>
-    <input type="text" th:field="*{lastName}" id="lastName">
+    <label for="password"> Пароль </label>
+    <input type="password" th:field="*{password}" id="password">
     <br>
     <label for="email"> Email </label>
     <input type="text" th:field="*{email}" id="email">
+    <br>
+    <label for="role"> Role 1 or 2 </label>
+    <input type="text" th:field="*{roles}" id="role">
     <br><br>
-    <input type="submit" style="color: #db71c9" value="Изменить"/>
+    <input type="submit" style="color: #db71c9" value="Сохранить"/>
 
 </form>
 </body>

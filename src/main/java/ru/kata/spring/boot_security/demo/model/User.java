@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
+import ru.kata.spring.boot_security.demo.security.OurUserDetails;
+
 import javax.persistence.*;
 import java.util.Collection;
 
