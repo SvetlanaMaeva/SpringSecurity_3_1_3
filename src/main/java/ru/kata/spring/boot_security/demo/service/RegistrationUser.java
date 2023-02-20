@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import javax.transaction.Transactional;
 
+
 @Service
 public class RegistrationUser {
 

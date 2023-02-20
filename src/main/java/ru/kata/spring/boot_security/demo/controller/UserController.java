@@ -16,7 +16,6 @@ import java.util.List;
 
 
 @Controller
-//@RequestMapping(value = "users")
 public class UserController {
 
     private final RegistrationUser registrationUser;
@@ -33,22 +32,22 @@ public class UserController {
         return "hello";
     }
 
-    @GetMapping("/user")
+    @GetMapping("/admin/user")
     public String printWelcome(ModelMap model) {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "index";
     }
 
-    @GetMapping("/registration")
+    @GetMapping("/admin/registration")
     public String regPage(@ModelAttribute("user") User user) {
         return "/registration";
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/admin/registration")
     public String registrationUser(@ModelAttribute("user") @Validated User user) {
         registrationUser.registration(user);
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 
     @GetMapping("/home")
@@ -57,22 +56,23 @@ public class UserController {
         return "homepage";
     }
 
-    @GetMapping(value = "/{id}/update")
+    @GetMapping(value = "/admin/{id}/update")
     public String edit(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userRepository.findById(id));
         return "update";
     }
 
-    @PatchMapping(value = "/{id}")
+    @PatchMapping(value = "/admin/{id}")
     public String update(@ModelAttribute("user") User user) {
+        registrationUser.registration(user);
         userRepository.save(user);
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 
-    @DeleteMapping(value = "/{id}/delete")
+    @DeleteMapping(value = "/admin/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         User user = userRepository.getById(id);
         userRepository.delete(user);
-        return "redirect:/user";
+        return "redirect:/admin/user";
     }
 }

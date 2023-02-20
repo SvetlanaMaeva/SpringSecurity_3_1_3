@@ -9,6 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.Collections;
 
@@ -25,14 +26,13 @@ public class AuthProviderImp implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        User userDetails = (User) userDetailsService.loadUserByUsername(username);
         String password = authentication.getCredentials().toString();
 
         if(!password.equals(userDetails.getPassword())){
-            throw new BadCredentialsException("Некорректный пароль");
+            throw new BadCredentialsException("Неверные учетные данные пользователя");
         }
-        return new UsernamePasswordAuthenticationToken(userDetails, password, Collections.emptyList());
-
+        return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getRoles());
     }
 
     @Override
