@@ -5,25 +5,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "username")
     private String username;
-
-    @Column(name = "password")
     private String password;
-
-    @Column(name = "email")
     private String email;
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -32,14 +27,16 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String email) {
+    public User(String username, String email, String password, Collection<Role> roles) {
         this.username = username;
         this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     public String getPassword() {
@@ -100,9 +97,17 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-
     public Collection<Role> getRoles() {
         return roles;
+    }
+        public String getRole() {
+        List<String> strRoles = roles.stream().map(Role::toString).collect(Collectors.toList());
+        if (roles.size() == 2) {
+            return strRoles.get(0) + "\n"
+                    + strRoles.get(1);
+        } else {
+            return strRoles.get(0);
+        }
     }
 
     public void setRoles(Collection<Role> roles) {
@@ -118,5 +123,7 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+
 }
 
