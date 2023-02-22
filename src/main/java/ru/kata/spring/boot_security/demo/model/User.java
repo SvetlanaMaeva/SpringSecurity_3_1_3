@@ -18,7 +18,7 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -99,15 +99,6 @@ public class User implements UserDetails {
 
     public Collection<Role> getRoles() {
         return roles;
-    }
-        public String getRole() {
-        List<String> strRoles = roles.stream().map(Role::toString).collect(Collectors.toList());
-        if (roles.size() == 2) {
-            return strRoles.get(0) + "\n"
-                    + strRoles.get(1);
-        } else {
-            return strRoles.get(0);
-        }
     }
 
     public void setRoles(Collection<Role> roles) {
