@@ -33,7 +33,7 @@ public class StartUtil implements CommandLineRunner {
 
 
         userService.save(new User("admin", "admin@gmail.com", "admin", roleAdmin));
-        userService.save(new User("user", "user@gmail.com", "user", roleUser));
+        userService.save(new User("user", "user@gmail.com", "user", roleAdmin));
         userService.save(new User("Айзек Азимов", "korvin@gmail.com", "isaak", roleUserAndAdmin));
         userService.save(new User("Роджер Желязны", "user@gmail.com", "amber", roleUser));
         userService.save(new User("Роберт Хайнлайн", "dan@gmail.com", "door", roleUser));
