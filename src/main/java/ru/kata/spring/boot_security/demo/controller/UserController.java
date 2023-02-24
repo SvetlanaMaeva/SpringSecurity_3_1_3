@@ -6,11 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -55,6 +57,7 @@ public class UserController {
 
     @GetMapping(value = "/admin/{id}/update")
     public String edit(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("role", userService.getListRole());
         model.addAttribute("user", userService.findById(id));
         return "update";
     }
