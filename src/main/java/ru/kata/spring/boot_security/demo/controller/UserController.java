@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -33,7 +32,7 @@ public class UserController {
 
     @GetMapping("/")
     public String helloRage() {
-        return "hello";
+        return "login";
     }
 
     @GetMapping("/home")
@@ -48,8 +47,6 @@ public class UserController {
         List<User> users = userService.findAll();
         User newUser = new User();
         Collection<Role> roles = userService.getRoles();
-//        User userId = userService.getById();
-//        model.addAttribute("userId", userId);
         model.addAttribute("newUser", newUser);
         model.addAttribute("roles", roles);
         model.addAttribute("users", users);
@@ -63,19 +60,13 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    @GetMapping(value = "/admin/{id}/update")
-    public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.findById(id));
-        return "update";
-    }
-
-    @PatchMapping(value = "/admin/{id}")
+    @PatchMapping(value = "/admin/update/{id}")
     public String update(@ModelAttribute("user") User user) {
         userService.editUser(user);
         return "redirect:/admin/user";
     }
 
-    @DeleteMapping(value = "/admin/{id}/delete")
+    @DeleteMapping(value = "/admin/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         User user = userService.getById(id);
         userService.delete(user);
