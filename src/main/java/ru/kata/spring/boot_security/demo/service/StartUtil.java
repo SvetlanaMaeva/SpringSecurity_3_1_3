@@ -13,8 +13,8 @@ import java.util.Collection;
 @Service
 public class StartUtil implements CommandLineRunner {
     private final UserService userService;
-    private final Role admin = new Role("ROLE_ADMIN");
-    private final Role user = new Role("ROLE_USER");
+    private final Role admin = new Role("ADMIN");
+    private final Role user = new Role("USER");
 
     @Autowired
     public StartUtil(UserService userService) {

@@ -105,15 +105,15 @@ public class User implements UserDetails {
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
-//    public String getRole() {
-//        List<String> strRoles = roles.stream().map(Role::toString).collect(Collectors.toList());
-//        if (roles.size() == 2) {
-//            return strRoles.get(0) + "\n"
-//                    + strRoles.get(1);
-//        } else {
-//            return strRoles.get(0);
-//        }
-//    }
+    public String getRole() {
+        List<String> strRoles = roles.stream().map(Role::toString).collect(Collectors.toList());
+        if (roles.size() == 2) {
+            return strRoles.get(0) + "\n"
+                    + strRoles.get(1);
+        } else {
+            return strRoles.get(0);
+        }
+    }
 
     @Override
     public String toString() {
