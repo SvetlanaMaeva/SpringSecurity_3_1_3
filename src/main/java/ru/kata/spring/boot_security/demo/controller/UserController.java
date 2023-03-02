@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
@@ -21,18 +20,15 @@ public class UserController {
 
 
     private final UserService userService;
-    private final UserRepository userRepository;
 
     @Autowired
-    public UserController(UserService userService,
-                          UserRepository userRepository) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/")
-    public String helloRage() {
-        return "login";
+    public String helloPage() {
+        return "redirect:/login";
     }
 
     @GetMapping("/home")
