@@ -5,7 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +29,6 @@ public class StartUtil implements CommandLineRunner {
         roleUser.add(user);
         roleUserAndAdmin.add(admin);
         roleUserAndAdmin.add(user);
-
 
         userService.save(new User("admin", "admin@gmail.com", "admin", roleAdmin));
         userService.save(new User("user", "user@gmail.com", "user", roleUser));
