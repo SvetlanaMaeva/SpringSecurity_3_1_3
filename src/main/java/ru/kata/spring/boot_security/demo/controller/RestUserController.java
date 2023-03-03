@@ -26,6 +26,11 @@ public class RestUserController {
         return userService.findAll();
     }
 
+    @GetMapping("/usersAll")
+    public List<User> showUserListTest() {
+        return userService.findAll();
+    }
+
 //    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/users/save")
     public User saveUser(@RequestBody User user) {

@@ -14,7 +14,7 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
-
+@RequestMapping
 @Controller
 public class UserController {
 
@@ -30,6 +30,12 @@ public class UserController {
     public String helloPage() {
         return "redirect:/login";
     }
+
+    @GetMapping("/test/users")
+    public String testUser(){
+        return "test";
+    }
+
 
     @GetMapping("/home")
     public String homePage(Model model, Principal principal){

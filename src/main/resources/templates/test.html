@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>My page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script defer src="../static/js/app.js" type="text/javascript" ></script>
+
+</head>
+<body>
+
+
+<div class="container">
+    <h1 class="mb-3">List</h1>
+    <h5 class="card-header tab-pane fade show active"  aria-labelledby="nav-home-tab">All users </h5>
+    <div  style="padding: 20px; background-color: white">
+        <div class="card" style="border: none">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="listUserInput" th:each="user: ${users}">
+                    <td th:text="*{user.id}"/>
+                    <td th:text="*{user.username}"/>
+                    <td th:text="*{user.email}"/>
+                    <td th:text="*{user.password}"/>
+                    <td th:text="*{user.role}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--<script>-->
+<!--    async function getAllUser() {-->
+<!--        const res = await fetch('http://localhost:8080/users')-->
+<!--        const resUser = await res.json();-->
+<!--        console.log(resUser);-->
+<!--        resUser.forEach(resUser => listUserToHTML(resUser))-->
+<!--    }-->
+<!--    window.addEventListener('DOMContentLoaded', getAllUser);-->
+<!--</script>-->
+
+<!--<script>-->
+
+<!--    function listUserToHTML({id, username, email, password, role}) {-->
+<!--        const userList = document.getElementById('listUserInput');-->
+
+<!--        userList.insertAdjacentHTML('afterend', `-->
+
+<!--        <tr id="listUserInput">-->
+<!--                    <td text="${id}"/>-->
+<!--                    <td text="${username}"/>-->
+<!--                    <td text="${email}"/>-->
+<!--                    <td text="${password}"/>-->
+<!--                    <td text="${role}"/>-->
+<!--                </tr>-->
+
+<!--        `);-->
+<!--    }-->
+
+
+<!--</script>-->
+
+</body>
+</html>
