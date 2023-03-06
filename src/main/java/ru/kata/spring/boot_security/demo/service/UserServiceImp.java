@@ -62,7 +62,6 @@ public class UserServiceImp implements UserService {
         }
         userRepository.save(updateUser);
     }
-
     @Override
     public User getById(Long id) {
         return userRepository.getById(id);

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
+
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -42,20 +43,15 @@
                     <div class="card" style="border: none">
                         <table class="table table-striped">
                             <thead>
-                            <tr>
+                                <th scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Password</th>
                                 <th scope="col">Role</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr th:each="user: ${user}">
-                                <td th:text="*{user.username}"/>
-                                <td th:text="*{user.email}"/>
-                                <td th:text="*{user.password}"/>
-                                <td th:text="*{user.role}"/>
-                            </tr>
+                            <tbody id="anyUserById">
+                            <!-- Scrypt -->
                             </tbody>
                         </table>
                     </div>
@@ -66,6 +62,7 @@
 
     </div>
 
+    <script src="/anyUserById.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>

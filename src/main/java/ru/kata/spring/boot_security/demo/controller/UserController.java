@@ -45,6 +45,7 @@ public class UserController {
 
     @GetMapping("/admin/user")
     public String printWelcome(ModelMap model, Principal principal) {
+
         User user = userService.findByUsername(principal.getName());
         List<User> users = userService.findAll();
         User newUser = new User();

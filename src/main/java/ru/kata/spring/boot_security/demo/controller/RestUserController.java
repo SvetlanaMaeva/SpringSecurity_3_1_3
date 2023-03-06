@@ -26,30 +26,21 @@ public class RestUserController {
         return userService.findAll();
     }
 
-    @GetMapping("/usersAll")
-    public List<User> showUserListTest() {
-        return userService.findAll();
-    }
-
-//    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/users/save")
     public User saveUser(@RequestBody User user) {
         return userService.save(user);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable Long id) {
         return userService.getById(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
     @DeleteMapping("/users/delete/{id}")
     public void deleteUserById(@PathVariable Long id) {
         userService.delete(userService.getById(id));
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
     @PutMapping ("/users/update/{id}")
     public void updateUserById(@RequestBody User user) {
         userService.editUser(user);
