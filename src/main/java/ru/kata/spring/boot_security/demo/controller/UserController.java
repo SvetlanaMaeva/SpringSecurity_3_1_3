@@ -31,12 +31,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/test/users")
-    public String testUser(){
-        return "test";
-    }
-
-
     @GetMapping("/home")
     public String homePage(Model model, Principal principal){
         model.addAttribute("user", userService.findByUsername(principal.getName()));

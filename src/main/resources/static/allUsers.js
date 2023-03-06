@@ -1,13 +1,16 @@
 async function getAllUser() {
     const res = await fetch('http://localhost:8080/users')
+    const principal = await fetch('http://localhost:8080/users/home')
 
     const resUser = await res.json();
-    console.log(resUser);
+    const  resPrincipal = await principal.json();
 
-    resUser.forEach(resUser => listUserToHTML(resUser))
+    resUser.forEach(resUser => listUserToHTML(resUser));
+    userNavbarDetails(resPrincipal);
 }
 
 window.addEventListener('DOMContentLoaded', getAllUser);
+
 
 
 
@@ -37,5 +40,13 @@ function listUserToHTML({id, username, email, password, role}) {
                                                             
         </tr>
 
+    `);
+}
+
+function userNavbarDetails({email, role}) {
+    const userList = document.getElementById('myUserDetails');
+
+    userList.insertAdjacentHTML('beforeend', `
+        <b> ${email} </b> with roles: <a>${role} </a> 
     `);
 }

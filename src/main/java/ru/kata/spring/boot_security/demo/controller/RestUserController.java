@@ -7,6 +7,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +32,9 @@ public class RestUserController {
         return userService.save(user);
     }
 
-    @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getById(id);
+    @GetMapping("/users/home")
+    public User getUserById(Principal principal) {
+        return userService.findByUsername(principal.getName());
     }
 
     @DeleteMapping("/users/delete/{id}")

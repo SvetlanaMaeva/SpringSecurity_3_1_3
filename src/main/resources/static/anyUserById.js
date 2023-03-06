@@ -1,17 +1,17 @@
-async function getMyUser({id}) {
+async function getMyUser() {
 
-    const res = await fetch('http://localhost:8080/users/id=${id}')
-
+    const res = await fetch('http://localhost:8080/users/home')
     const resUser = await res.json();
-    console.log(resUser);
+
      findUserToHTML(resUser)
+    userNavbarDetails(resUser);
 }
 
 window.addEventListener('DOMContentLoaded', getMyUser);
 
 
 function findUserToHTML({id, username, email, password, role}) {
-    const userList = document.getElementById('anyUserById');
+    const userList = document.getElementById('myUserInfo');
 
     userList.insertAdjacentHTML('beforeend', `
 
@@ -22,6 +22,17 @@ function findUserToHTML({id, username, email, password, role}) {
             <td>${password}</td>
             <td>${role}</td>               
         </tr>
-
     `);
 }
+
+function userNavbarDetails({email, role}) {
+    const userList = document.getElementById('myUserDetails');
+
+    userList.insertAdjacentHTML('beforeend', `
+        <b> ${email} </b> with roles: <a>${role} </a> 
+    `);
+}
+
+
+
+

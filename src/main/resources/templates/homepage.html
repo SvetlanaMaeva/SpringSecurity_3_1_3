@@ -14,9 +14,8 @@
 <body>
 
 <nav class="navbar navbar-dark bg-dark" style="display: block; color: white">
-    <a class="navbar-brand">
-        <b th:text=" ${user.getEmail()} "/>
-        with roles: <a th:text=" ${user.getRole()} "/>
+    <a id="myUserDetails"  class="navbar-brand">
+        <!--Scrypt-->
     </a>
     <input type="button" style="float: right; color: gray" class="btn btn-dark" value="Logout"
            onclick="window.location.href = '/logout'"/>
@@ -50,7 +49,7 @@
                                 <th scope="col">Role</th>
                             </tr>
                             </thead>
-                            <tbody id="anyUserById">
+                            <tbody id="myUserInfo">
                             <!-- Scrypt -->
                             </tbody>
                         </table>
