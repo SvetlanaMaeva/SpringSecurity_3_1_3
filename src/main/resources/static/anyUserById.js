@@ -3,7 +3,7 @@ async function getMyUser() {
     const res = await fetch('http://localhost:8080/users/home')
     const resUser = await res.json();
 
-     findUserToHTML(resUser)
+    findUserToHTML(resUser)
     userNavbarDetails(resUser);
 }
 
@@ -27,7 +27,6 @@ function findUserToHTML({id, username, email, password, role}) {
 
 function userNavbarDetails({email, role}) {
     const userList = document.getElementById('myUserDetails');
-
     userList.insertAdjacentHTML('beforeend', `
         <b> ${email} </b> with roles: <a>${role} </a> 
     `);

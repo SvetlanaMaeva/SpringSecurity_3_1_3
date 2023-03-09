@@ -26,6 +26,10 @@ public class RestUserController {
     public List<User> showUserList() {
         return userService.findAll();
     }
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable Long id){
+        return userService.getById(id);
+    }
 
     @PostMapping("/users/save")
     public User saveUser(@RequestBody User user) {

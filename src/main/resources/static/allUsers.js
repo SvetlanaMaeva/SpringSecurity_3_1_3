@@ -4,15 +4,12 @@ async function getAllUser() {
 
     const resUser = await res.json();
     const  resPrincipal = await principal.json();
-
     resUser.forEach(resUser => listUserToHTML(resUser));
     userNavbarDetails(resPrincipal);
+
 }
 
 window.addEventListener('DOMContentLoaded', getAllUser);
-
-
-
 
 function listUserToHTML({id, username, email, password, role}) {
     const userList = document.getElementById('listUserInput');
@@ -26,20 +23,15 @@ function listUserToHTML({id, username, email, password, role}) {
             <td>${password}</td>
             <td>${role}</td> 
             <td>
-                <input type="submit" class="btn btn-info" data-toggle="modal"
-                     data-target="#editModal"  data-user-id="${id}"
-                    value="Edit">
-                   
-                    
+                <input type="submit" class="btn btn-info js-open-modal" data-modal="data-modal" data-toggle="modal" 
+                data-target="#editModalContainer" value="Edit" data-user-id="${id}" id="myBtn">
             </td>
             <td>
                 <input type="submit" class="btn btn-danger" data-toggle="modal"
-                    data-target="${'#deleteModal' + id}" data-target="#editModal"  data-user-id="${id}"
+                    data-target="${'#deleteModal' + id}" data-target="#deleteModalContainer" id="idUser"  data-user-id="${id}"
                     value="Delete">
-            </td>
-                                                            
+            </td> 
         </tr>
-
     `);
 }
 
@@ -50,3 +42,6 @@ function userNavbarDetails({email, role}) {
         <b> ${email} </b> with roles: <a>${role} </a> 
     `);
 }
+
+
+
