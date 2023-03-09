@@ -56,11 +56,11 @@ public class UserServiceImp implements UserService {
     }
     @Override
     @Transactional
-    public void editUser(User updateUser) {
+    public User editUser(User updateUser) {
         if (!updateUser.getPassword().equals(getById(updateUser.getId()).getPassword())){
             updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         }
-        userRepository.save(updateUser);
+        return userRepository.save(updateUser);
     }
     @Override
     public User getById(Long id) {

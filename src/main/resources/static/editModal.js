@@ -1,78 +1,91 @@
-async function getAllUser() {
-    const resUser = await fetch('http://localhost:8080/users')
-    let res = await resUser.json();
-    console.log(res);
+$('#editModalContainer').on('show.bs.modal', ev => {
+    let button = $(ev.relatedTarget);
+    let id = button.data('user-id');
+    viewEditModal(id);
+})
 
-    const keys = Object.keys(res);
-    console.log(keys)
+$(async function () {
+    editCurrentUser();
+});
 
-    await editModal(res);
+async function viewEditModal(id) {
+    let userEdit = await getUser(id);
 
-    // await getId();
-
-// let buttons = document.querySelectorAll('input[data-user-id]');
-//
-// for(let button of buttons){
-//     button.addEventListener('click',(e)=>{
-//         showData(e.currentTarget.dataset.userId);
-//         console.log(e);
-//     });
-//
-// }
-
-
-    //
-    // var modal = document.getElementById("editModalContainer");
-    // var btn = document.getElementById("myBtn");
-    //
-    // btn.onclick = function() {
-    //     modal.style.display = "block";
-    // }
-    // window.onclick = function(event) {
-    //     if (event.target === modal) {
-    //         modal.style.display = "none";
-    //     }
-    // }
-}
-window.addEventListener('DOMContentLoaded', getAllUser);
-
-    let buttons = document.querySelectorAll('input[data-user-id]');
-    console.log(buttons);
-
-    for (let button of buttons) {
-        button.addEventListener('click', async (e) => {
-            showData(e.currentTarget.dataset.userId)
-        });
-    }
-
-    function showData(id) {
-        console.log(id);
-    }
-
-    function findByUserId(arr, id) {
-        return arr.find(item => item.id === id);
-    }
-    //
-    // const modalEl = document.getElementById('editModalContainer');
-    // modalEl.addEventListener('show.bs.modal', function (event) {
-    //     let id = event.relatedTarget;
-    //     let id1 = id.getAttribute('data-user-id');
-    //     console.log(id1);
-    // });
-
-
-
-async function editModal(arr) {
-
-    const modalEl = document.getElementById('editModalContainer');
-
-    let user = "";
-    modalEl.addEventListener('show.bs.modal', function (event) {
-        let id = event.relatedTarget;
-        let id1 = id.getAttribute('data-user-id');
-        console.log(id1);
-        user = findByUserId(arr, id1);
-        console.log(user);
-    });
+    let formEdit = document.getElementById('formEditUser');
+    formEdit.id.value = id;
+    formEdit.username.value = userEdit.username;
+    formEdit.email.value = userEdit.email;
+    formEdit.password.value = userEdit.password;
+    $('#roleInput').empty();
+    console.log(formEdit.id.value);
+    await fetch('http://localhost:8080/users/role')
+        .then(r => r.json())
+        .then(roles => {
+            roles.forEach(role => {
+                let selectedRole = false;
+                for (let i = 0; i < userEdit.roles.length; i++) {
+                    if (userEdit.roles[i].name === role.name) {
+                        selectedRole = true;
+                        break;
+                    }
+                }
+                let element = document.createElement("option");
+                element.text = role.name;
+                element.value = role.id;
+                if (selectedRole) element.selected = true;
+                $('#roleInput')[0].appendChild(element);
+            })
+        })
+        .catch((error) => {
+            alert(error);
+        })
 }
 
+async function getUser(id) {
+    let url = 'http://localhost:8080/users/' + id;
+    let response = await fetch(url);
+    return await response.json();
+}
+function editCurrentUser() {
+    let formEdit = document.getElementById('formEditUser');
+    formEdit.addEventListener("submit", function (event) {
+        event.preventDefault();
+        let editUserRoles = [];
+        for (let i = 0; i < formEdit.roles.options.length; i++) {
+            if (formEdit.roles.options[i].selected) editUserRoles.push({
+                id: formEdit.roles.options[i].value,
+                role: formEdit.roles.options[i].name
+            });
+        }
+
+        fetch('http://localhost:8080/users/update', {
+
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: formEdit.id.value,
+                firstname: formEdit.username.value,
+                email: formEdit.email.value,
+                password: formEdit.password.value,
+                roles: editUserRoles
+            })
+        }).then(() => {
+            formEdit.reset();
+            reloadShowUsers();
+            $('#editFormCloseButton').click();
+        })
+            .catch((error) => {
+                usersInfo = ''
+                alert(error);
+            });
+    })
+}
+const reloadShowUsers = () => {
+    fetch('http://localhost:8080/users/')
+        .then(response => response.json())
+        .then(data => {
+            listUserToHTML(data)
+        })
+}

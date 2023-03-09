@@ -2,12 +2,16 @@ package ru.kata.spring.boot_security.demo.controller;
 
 import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +30,14 @@ public class RestUserController {
     public List<User> showUserList() {
         return userService.findAll();
     }
+
+    @GetMapping("/users/role")
+    public ResponseEntity<Collection<Role>> getAllRoles(){
+        return new ResponseEntity<>(userService.getRoles(), HttpStatus.OK);
+    }
+
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Long id){
+    public User getUserById(@PathVariable Long id){
         return userService.getById(id);
     }
 
@@ -46,8 +56,9 @@ public class RestUserController {
         userService.delete(userService.getById(id));
     }
 
-    @PutMapping ("/users/update/{id}")
-    public void updateUserById(@RequestBody User user) {
+    @PatchMapping (value = "/users/update")
+    public ResponseEntity<HttpStatus> updateUserById(@RequestBody User user) {
         userService.editUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
