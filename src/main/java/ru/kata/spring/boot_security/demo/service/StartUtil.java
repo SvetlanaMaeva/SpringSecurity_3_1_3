@@ -35,6 +35,17 @@ public class StartUtil implements CommandLineRunner {
         userService.save(new User("Айзек Азимов", "android@ya.ru", "isaak", roleUserAndAdmin));
         userService.save(new User("Роджер Желязны", "korvin@gmail.com", "amber", roleUser));
         userService.save(new User("Роберт Хайнлайн", "dan@yahoo.com", "door", roleUser));
+        userService.save(new User("Виктор Пелевин", "muchomor@ya.ru", "p", roleUserAndAdmin));
+        userService.save(new User("Терри Пратчет", "rinsvind@gmail.com", "ank", roleUser));
+        userService.save(new User("Рэй Бредберри", "rrr@yahoo.com", "123", roleAdmin));
+        userService.save(new User("Александр Беляев", "amphibian@yahoo.com", "qweqwe", roleAdmin));
+        userService.save(new User("Айзек Азимов", "android@ya.ru", "isaak", roleUserAndAdmin));
+        userService.save(new User("Роджер Желязны", "korvin@gmail.com", "amber", roleUser));
+        userService.save(new User("Роберт Хайнлайн", "dan@yahoo.com", "door", roleUser));
+        userService.save(new User("Виктор Пелевин", "muchomor@ya.ru", "p", roleUserAndAdmin));
+        userService.save(new User("Терри Пратчет", "rinsvind@gmail.com", "ank", roleUser));
+        userService.save(new User("Рэй Бредберри", "rrr@yahoo.com", "123", roleAdmin));
+        userService.save(new User("Александр Беляев", "amphibian@yahoo.com", "qweqwe", roleAdmin));
 
     }
 }

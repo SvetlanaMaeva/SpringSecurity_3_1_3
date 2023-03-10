@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
 <body>
 
 <nav class="navbar navbar-dark bg-dark" style="display: block; color: white">
-    <a id="myUserDetails"  class="navbar-brand">
+    <a id="myUserDetails" class="navbar-brand">
         <!--script-->
     </a>
     <input type="button" style="float: right; color: gray" class="btn btn-dark" value="Logout"
@@ -22,145 +23,187 @@
 </nav>
 
 
-<div class="container-fluid" style="background-color: white">
+<div class="container-fluid">
     <div class="row">
         <div class="col-lg-2 navbar-container bg-light" style="height: 100vh; padding-right: 0; padding-left: 0;">
             <nav class="navbar navbar-expand-md navbar-light"
                  style="background-color: white; width: 100%; align-items: flex-start; height: 100%; padding: 15px 0">
-                <div class="collapse navbar-collapse" id="navbar" style="flex-wrap: wrap">
-                    <a class="btn btn-primary btn-lg btn-block" style="text-align: left" href="/admin/user">Admin</a>
-                    <a class="btn btn-link" style="text-align: left" href="/home">User</a>
-
+                <div class="nav flex-column nav-pills col-lg-12" id="v-pills-tab" role="tablist"
+                     aria-orientation="vertical">
+                    <a class="nav-link active col-lg-12" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home"
+                       role="tab"
+                       aria-controls="v-pills-home" aria-selected="true">Admin</a>
+                    <a class="nav-link col-lg-12" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                       role="tab"
+                       aria-controls="v-pills-profile" aria-selected="false">User</a>
                 </div>
             </nav>
         </div>
 
-        <div class="card col-lg-10 content-container" style="background-color: #f8f9fa; border: none; padding-top: 15px">
-            <h1>Admin panel</h1>
-            <nav>
-
+        <div class="tab-content col-lg-10" id="v-pills-tabContent" style="background-color: #f8f9fa">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <nav>
+                    <h1>Admin panel</h1>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-                            role="tab" aria-controls="nav-home" aria-selected="true">User table</a>
+                               role="tab" aria-controls="nav-home" aria-selected="true">User table</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
                                role="tab" aria-controls="nav-profile" aria-selected="false">New User</a>
                         </li>
                     </ul>
+                </nav>
 
-            </nav>
 
-            <div class="card tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            <h5 class="card-header tab-pane fade show active"  aria-labelledby="nav-home-tab">All users </h5>
-            <div  style="padding: 20px; background-color: white">
-                    <div class="card" style="border: none">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Password</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                            </thead>
-                            <tbody id="listUserInput">
-                            <!-- Scrypt -->
-                            </tbody>
-                        </table>
+                <div class="card tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <h5 class="card-header tab-pane fade show active" aria-labelledby="nav-home-tab">All users </h5>
+                        <div style="padding: 20px">
+                            <div class="card" style="border: none">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="listUserInput">
+                                    <!-- Scrypt -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-        </div>
-                <div class=" tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <h5 class="card-header" id="newUser">Add new users </h5>
-                    <div  style="padding: 20px; background-color: white">
-                        <div class="card" style="border: none">
-                            <form th:method="POST" th:action="@{/admin/user}" class="form-horizontal"
-                                  role="form" style="text-align: center; display: flex;
-                        align-items: center; width: 100%; flex-direction: column " th:object="${newUser}">
-                                <div style="font-weight: bold" class="form-group; col-sm-4">
-                                    <label class="col-sm-12  control-label" >Name</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" th:field="*{username}" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div style="font-weight: bold" class="form-group; col-sm-4">
-                                    <label class="col-sm-12 control-label">Password</label>
-                                    <div class="col-sm-12">
-                                        <input type="password" class="form-control" th:field="*{password}"/>
-                                    </div>
-                                </div>
-                                <div style="font-weight: bold" class="form-group; col-sm-4">
-                                    <label class="col-sm-12  control-label">E-mail</label>
-                                    <div class="col-sm-12 ">
-                                        <input type="email" class="form-control" th:field="*{email}"/>
-                                    </div>
-                                </div>
-                                <label style="font-weight: bold" class="control-label" th:field="*{roles}">Role</label>
-                                <div style="font-weight: bold" class="form-group; col-sm-4">
-                                    <select class="form-select;  col-sm-12" size="2"  multiple aria-label="Roles" th:field="${newUser.roles}">
-                                        <option th:each="role:${roles}" th:value="${role.id}" th:text="${role.name}" />
-                                    </select>
-                                </div>
+                    <div class=" tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <h5 class="card-header" id="newUser">Add new users </h5>
+                        <div style="padding: 20px">
+                            <div class="card" style="border: none">
 
-                                <div class="col-sm-12" style="flex-direction: column; text-align: center; display: flex;
+                                <!--form SAVE-->
+                                <form class="form-horizontal" role="form" style="text-align: center; display: flex;
+                        align-items: center; width: 100%; flex-direction: column " id="saveUserForm">
+                                    <div style="font-weight: bold" class="form-group; col-sm-4">
+                                        <label class="col-sm-12  control-label">Name</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" id="usernameSave" name="username" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div style="font-weight: bold" class="form-group; col-sm-4">
+                                        <label class="col-sm-12 control-label">Password</label>
+                                        <div class="col-sm-12">
+                                            <input type="passwordSave" class="form-control" id="passwordSave"
+                                                   name="password"/>
+                                        </div>
+                                    </div>
+                                    <div style="font-weight: bold" class="form-group; col-sm-4">
+                                        <label class="col-sm-12  control-label">E-mail</label>
+                                        <div class="col-sm-12 ">
+                                            <input type="emailSave" class="form-control" id="emailSave" name="email"/>
+                                        </div>
+                                    </div>
+                                    <label style="font-weight: bold" class="control-label">Role</label>
+                                    <div style="font-weight: bold" class="form-group; col-sm-4">
+                                        <select class="form-control;  col-sm-12" size="2" multiple aria-label="Roles"
+                                                id="roleSave" name="roles">
+                                            <!--                                        <option>Admin</option>-->
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12" style="flex-direction: column; text-align: center; display: flex;
                                         align-items: center; padding-top: 15px">
-                                    <input class="btn btn-success" type="submit" value="Add new user"/>
-                                </div>
-                            </form>
+                                        <input class="btn btn-success" type="submit" id="saveButton"
+                                               data-user-save="saveUser" value="Add new user"/>
+                                    </div>
+                                </form>
+                                <!--/form SAVE-->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--Admin User info-->
+
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div class="card col-lg-12 content-container"
+                     style="background-color: #f8f9fa; border: none; padding-top: 15px">
+                    <h1>User information-page</h1>
+                    <div class="card">
+                        <h5 class="card-header">About user </h5>
+                        <div style="padding: 20px">
+                            <div style="background-color: white">
+                                <div class="card" style="border: none">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">Role</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="myUserInfo">
+                                        <!-- Scrypt -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Admin User info-->
+
         </div>
     </div>
 </div>
 
+
 <!--Modal Edit-->
-<div class="modal fade"  tabindex="-1" id="editModalContainer"
+<div class="modal fade" tabindex="-1" id="editModalContainer"
      aria-hidden="true" aria-labelledby="editModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel" >Edit user</h5>
+                <h5 class="modal-title" id="editModalLabel">Edit user</h5>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="formEditUser" role="form" style="text-align: center; display: flex;
-                    align-items: center; width: 100%; flex-direction: column " >
+                    align-items: center; width: 100%; flex-direction: column ">
 
                     <div class="form-group mb-2" style="font-weight: bold">
                         <label for="editUserId" class="form-label fw-bold">ID</label>
-                        <input type="text" class="form-control" name="id" id="editUserId"  readonly/>
+                        <input type="text" class="form-control" name="id" id="editUserId" readonly/>
                     </div>
 
                     <div style="font-weight: bold" class="form-group">
                         <label class="form-label fw-bold"
-                               for="username" >Name</label>
-                        <input type="text" class="form-control" name="username"   id="username"  />
+                               for="username">Name</label>
+                        <input type="text" class="form-control" name="username" id="username"/>
                     </div>
 
                     <div style="font-weight: bold" class="form-group">
-                        <label class="col-sm-12 control-label" for="passwordInput" >Password</label>
-                        <input type="password" class="form-control" name="password" id="passwordInput" />
+                        <label class="col-sm-12 control-label" for="passwordInput">Password</label>
+                        <input type="password" class="form-control" name="password" id="passwordInput"/>
                     </div>
 
                     <div style="font-weight: bold" class="form-group">
-                        <label class="col-sm-12  control-label" for="emailInput" >E-mail</label>
+                        <label class="col-sm-12  control-label" for="emailInput">E-mail</label>
                         <input type="email" class="form-control" name="email" id="emailInput"/>
                     </div>
 
-                    <label style="font-weight: bold" class="control-label form-group col-sm-6" >Role</label>
-                    <select name="roles" class="form-control col-sm-6" id="roleInput" size="2" >
-
+                    <label style="font-weight: bold" class="control-label form-group col-sm-6">Role</label>
+                    <select name="roles" style="padding: 6px; max-width: 46%" class="form-control col-sm-6"
+                            id="roleInput" size="2">
                     </select>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button  class="btn btn-info" >Edit</button>
+                        <button class="btn btn-secondary" id="closeEdit" data-dismiss="modal">Close</button>
+                        <button class="btn btn-info" id="btnEdit">Edit</button>
                     </div>
                 </form>
             </div>
@@ -177,47 +220,43 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel" >Edit user</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Edit user</h5>
             </div>
             <div class="modal-body">
-                <form th:method="DELETE" th:object="${user}" th:action="@{/admin/delete/{id}(id=${user.getId()})}"
-                      class="form-horizontal" role="form" style="text-align: center;
+                <form class="form-horizontal" id="formDeleteUser" role="form" style="text-align: center;
                                                           display: flex; align-items: center; width: 100%; flex-direction: column ">
 
                     <div class="form-group mb-2" style="font-weight: bold">
                         <label for="deleteUserId" class="form-label fw-bold">ID</label>
-                        <input type="text" th:value="${user.id}" class="form-control"
-                               id="deleteUserId" readonly/>
+                        <input type="text" class="form-control" name="id" id="deleteUserId" readonly/>
                     </div>
 
                     <div style="font-weight: bold" class="form-group">
                         <label class="form-label fw-bold"
-                               for="usernameDelete" >Name</label>
-                        <input type="text" th:name="username"  th:value="${user.username}"
-                               class="form-control" id="usernameDelete" readonly/>
+                               for="usernameDelete">Name</label>
+                        <input type="text" class="form-control" name="username" id="usernameDelete" readonly/>
                     </div>
 
                     <div style="font-weight: bold" class="form-group">
-                        <label class="col-sm-12 control-label" for="passwordDelete" >Password</label>
-                        <input type="password" th:name="password" th:value="${user.password}"
-                               class="form-control" id="passwordDelete" readonly/>
+                        <label class="col-sm-12 control-label" for="passwordDelete">Password</label>
+                        <input type="password" class="form-control" name="password" id="passwordDelete" readonly/>
                     </div>
 
                     <div style="font-weight: bold" class="form-group">
-                        <label class="col-sm-12  control-label" for="emailDelete" >E-mail</label>
-                        <input type="email" th:name="email"  th:value="${user.email}"
-                               class="form-control" id="emailDelete" readonly/>
+                        <label class="col-sm-12  control-label" for="emailDelete">E-mail</label>
+                        <input type="email" class="form-control" name="email" id="emailDelete" readonly/>
                     </div>
 
-                    <label style="font-weight: bold" class="control-label
-                                                        form-group; col-sm-12" for="roleDelete">Role</label>
-                    <select name="roles" class="form-select;  col-sm-6" size="2" >
-                        <option th:each="role:${roles}" th:value="${role.id}"
-                                th:text="${role.name}" id="roleDelete" readonly/>
+                    <label style="font-weight: bold" class="control-label form-group; col-sm-12">Role</label>
+                    <select style="padding: 6px; max-width: 46%" class="form-control  col-sm-6" id="roleDelete"
+                            name="roles" size="2">
+                        <option readonly/>
                     </select>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button  class="btn btn-danger" >Delete</button>
+                        <button class="btn btn-secondary" id="closeDelete"
+                                data-dismiss="modal">Close
+                        </button>
+                        <button class="btn btn-danger"  id="deleteBtn">Delete</button>
                     </div>
                 </form>
             </div>
@@ -226,18 +265,20 @@
 </div>
 <!--/Modal Delete-->
 
-    <script defer src="/allUsers.js" ></script>
-    <script defer src="/editModal.js" ></script>
+<script defer src="/allUsers.js"></script>
+<script defer src="/editModal.js"></script>
+<script defer src="/deleteModal.js"></script>
+<script defer src="/saveUser.js"></script>
+<script defer src="/anyUserById.js"></script>
 
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

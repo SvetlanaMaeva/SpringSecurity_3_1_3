@@ -30,7 +30,6 @@ public class UserServiceImp implements UserService {
                           RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-
         this.roleRepository = roleRepository;
     }
 

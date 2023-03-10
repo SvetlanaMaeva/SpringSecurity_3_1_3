@@ -5,12 +5,11 @@ $('#editModalContainer').on('show.bs.modal', ev => {
 })
 
 $(async function () {
-    editCurrentUser();
+    await editCurrentUser();
 });
 
 async function viewEditModal(id) {
     let userEdit = await getUser(id);
-
     let formEdit = document.getElementById('formEditUser');
     formEdit.id.value = id;
     formEdit.username.value = userEdit.username;
@@ -18,7 +17,7 @@ async function viewEditModal(id) {
     formEdit.password.value = userEdit.password;
     $('#roleInput').empty();
     console.log(formEdit.id.value);
-    await fetch('http://localhost:8080/users/role')
+    await fetch('http://localhost:8080/api/role')
         .then(r => r.json())
         .then(roles => {
             roles.forEach(role => {
@@ -42,50 +41,44 @@ async function viewEditModal(id) {
 }
 
 async function getUser(id) {
-    let url = 'http://localhost:8080/users/' + id;
+    let url = 'http://localhost:8080/api/' + id;
     let response = await fetch(url);
     return await response.json();
 }
-function editCurrentUser() {
-    let formEdit = document.getElementById('formEditUser');
-    formEdit.addEventListener("submit", function (event) {
-        event.preventDefault();
+
+async function editCurrentUser() {
+    let formEdit = document.forms["formEditUser"];
+    formEdit.addEventListener("submit", async (e)=> {
+        e.preventDefault();
         let editUserRoles = [];
         for (let i = 0; i < formEdit.roles.options.length; i++) {
             if (formEdit.roles.options[i].selected) editUserRoles.push({
                 id: formEdit.roles.options[i].value,
-                role: formEdit.roles.options[i].name
+                name: formEdit.roles.options[i].role,
             });
         }
-
-        fetch('http://localhost:8080/users/update', {
-
+        await fetch('http://localhost:8080/api/update', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 id: formEdit.id.value,
-                firstname: formEdit.username.value,
+                username: formEdit.username.value,
                 email: formEdit.email.value,
                 password: formEdit.password.value,
-                roles: editUserRoles
+                roles: editUserRoles,
             })
-        }).then(() => {
-            formEdit.reset();
-            reloadShowUsers();
-            $('#editFormCloseButton').click();
-        })
-            .catch((error) => {
-                usersInfo = ''
-                alert(error);
-            });
-    })
-}
-const reloadShowUsers = () => {
-    fetch('http://localhost:8080/users/')
-        .then(response => response.json())
-        .then(data => {
-            listUserToHTML(data)
+            })
+                .then(() => {
+                formEdit.reset();
+                showUsersTable();
+                $('#closeEdit').click();
+            })
+                .catch((error) => {
+                    alert(error);
+                })
         })
 }
+
+

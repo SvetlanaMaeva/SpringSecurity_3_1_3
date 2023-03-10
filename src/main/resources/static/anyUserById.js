@@ -1,6 +1,6 @@
 async function getMyUser() {
 
-    const res = await fetch('http://localhost:8080/users/home')
+    const res = await fetch('http://localhost:8080/api/home')
     const resUser = await res.json();
 
     findUserToHTML(resUser)
@@ -8,7 +8,6 @@ async function getMyUser() {
 }
 
 window.addEventListener('DOMContentLoaded', getMyUser);
-
 
 function findUserToHTML({id, username, email, password, role}) {
     const userList = document.getElementById('myUserInfo');

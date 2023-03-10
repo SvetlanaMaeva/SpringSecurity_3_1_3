@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" >
 
 
 <html lang="en">
@@ -27,9 +27,7 @@
             <nav class="navbar navbar-expand-md navbar-light"
                  style="background-color: white; width: 100%; align-items: flex-start; height: 100%; padding: 15px 0">
                 <div class="collapse navbar-collapse" id="navbar" style="flex-wrap: wrap; padding: 15px 0">
-                    <a th:if="${user.getRole().contains('ADMIN') }"  class="btn btn-link" style="text-align: left"
-                       href="/admin/user">Admin</a>
-                    <a class="btn btn-primary btn-lg btn-block" style="text-align: left" href="/admin/home">User</a>
+                    <a class="btn btn-primary btn-lg btn-block" style="text-align: left" href="/home">User</a>
                 </div>
             </nav>
         </div>
@@ -58,10 +56,11 @@
             </div>
         </div>
         </div>
-
     </div>
+</div>
 
     <script src="/anyUserById.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
